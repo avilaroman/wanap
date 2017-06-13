@@ -7,7 +7,9 @@ Puedes referirte en el sitio oficial [Wanap](https://wanap.com).
 24hs abierto y operable!
 
 
-![Logo Wanap](https://avilaroman.github.io/wanap/192x192.png)
+![Logo Wanap](https://avilaroman.github.io/wanap/wanap.png)
+oficina.jpg
+![Oficina Virtual](oficina.jpg)
 ![compu tarjeta](https://avilaroman.github.io/wanap/wanap1.jpg)
 Cuadro de Servicos
 
@@ -18,8 +20,8 @@ Cuadro de Servicos
 - Rápido, fácil y seguro.
 - Sin trámites burocráticos.
 
-1. Numerados
-2. Lista
+![Refiere a un amigo](refiere_amigo.jpg)
+[Refiere](http://wanap.com)
 
 **Cuentas Gratuitas** sin _costo_ de `Mantenimiento` 100% Bonificadas!
 
