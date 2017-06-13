@@ -8,9 +8,10 @@ Puedes referirte en el sitio oficial [Wanap](https://wanap.com).
 
 
 ![Logo Wanap](https://avilaroman.github.io/wanap/wanap.png)
-oficina.jpg
+
 ![Oficina Virtual](oficina.jpg)
-![compu tarjeta](https://avilaroman.github.io/wanap/wanap1.jpg)
+
+![compu tarjeta](wanap1.jpg)
 Cuadro de Servicos
 
 # Cuenta Bancaria con CBU
