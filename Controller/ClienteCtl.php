@@ -205,9 +205,9 @@ class ControladorCliente
 					<head></head>
 					<body>
 					
-					<h1 style=\"color: red\">ola k ase, kalifikandonoz o k ase</h1>
+					<h1 style=\"color: red\">Atención!</h1>
 					<h3 style=\"color: blue\">Bienvenido</h3>
-					Se te da acceso a la pagina de <a href=\"http://alanturing.cucei.udg.mx/cc409/gastosse/index.php\"> Control de Gastos </a> <br> <br>
+					Se te da acceso a la pagina de <a href=\"http://alanturing.cucei.udg.mx/cc409/gastosse/index.php\"> Wanap Control </a> <br> <br>
 					
 					<strong>username: </strong> $username <br>
 					<strong>password: </strong>$password <br>
@@ -219,13 +219,13 @@ class ControladorCliente
 					</body>
 					</html>	
 					";
-		$headers  = 'From: administracion@gastos.com'."\r\n";
+		$headers  = 'From: avilaroman@gmail.com'."\r\n";
 		$headers .= 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 		
 		if ( mail($para,$asunto,$mensaje,$headers) )
 		{
-			//echo 'Se mando el correo';
+			//echo 'Se mandó el correo';
 		}
 		else {
 			//echo 'Hubo algun error al enviar el correo';
