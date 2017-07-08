@@ -1,0 +1,55 @@
+body {
+	background-color:#222;
+}
+
+.hero-unit-login {
+  background-image:url('../img/Fotolia_23726593_S-digitalmoney.jpg');
+  background-size:cover;
+  height:400px;
+  opacity: .5;
+}
+
+.hero-unit{
+  background-image:url('../img/digital-money.jpg');
+  background-size:cover;
+  height:400px;
+  opacity: .8;
+}
+
+.hero-unit.div{
+  opacity: .7;
+}
+
+h1 {
+  position: relative;
+  top: -350px;
+  left: 40px;
+  color:#fff;
+}
+
+h5 {
+  position: relative;
+  top: -300px;
+  left: 40px;
+  color:#fff;
+}
+
+div{
+	color: #fff
+}
+
+.lead {
+  position: relative;
+  top: -300px;
+  left: 20px;
+  color:#fff;
+}
+
+.modal-body{
+	color: #000
+}
+
+
+.modal-header{
+	color: #000
+}

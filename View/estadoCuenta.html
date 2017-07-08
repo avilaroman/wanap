@@ -1,0 +1,494 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../View/css/bootstrap.css"/>
+	<script src="http://code.jquery.com/jquery.js"></script>
+	<script src="../View/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="../View/css/formularioUsuario.css"/>
+	<link rel="stylesheet" type="text/css" href="../View/css/login.css"/>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script src="../View/js/ajax.js"></script>
+	<script>
+  $(function() {
+    $( "#datepicker" ).datepicker();
+    $( "#datepickerInicio" ).datepicker();
+    $( "#datepickerFin" ).datepicker();
+    $( "#datepickerPago" ).datepicker();
+  });
+  </script>
+</head>
+<body onload=" llenarEstados(); clientes(); admin();">
+	<script src="../View/js/login.js"></script>
+	<script src="../View/js/ajax.js"></script>
+	<script src="../View/js/validacion.js"></script>
+	<div class="navbar">
+ 		 <div class="navbar-inner">
+    		<div class="container">
+ 
+   		   <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+   		   <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+    		    <span class="icon-bar"></span>
+    		    <span class="icon-bar"></span>
+    		    <span class="icon-bar"></span>
+   		   </a>
+ 
+   		   <!-- Be sure to leave the brand out there if you want it shown -->
+  		    <a class="brand" href="#" onclick="home()">Control Gastos</a>
+ 
+ 		     <!-- Everything you want hidden at 940px or less, place within here -->
+  		    <div class="nav-collapse collapse">
+  		      <!-- .nav, .navbar-search, .navbar-form, etc -->
+  		      	<ul class="nav nav-tabs">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">Consultas<b class="caret"></b></a>
+    					<ul class="dropdown-menu">
+    		 			 <!-- links -->
+    		 				<li><a href="../View/consultaPago.html">Movimientos</a></li>
+							<li><a href="../View/estadoCuenta.html">Estado de cuenta</a></li>
+   						</ul>
+   					</li>
+					<li id="dropMod" class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">Modificar<b class="caret"></b></a>
+    					<ul class="dropdown-menu">
+    		 			 <!-- links -->
+    		 				<li><a href="#modalmodificador" data-toggle="modal">Cliente</a></li>
+						  	<li><a href="#modalModContrato" data-toggle="modal">Contrato</a></li>
+   						</ul>
+   					</li>
+   					<li id="dropExp" class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">Expedientes<b class="caret"></b></a>
+    					<ul class="dropdown-menu">
+    		 			 <!-- links -->
+    		 				<li><a href="../View/expedienteCliente.html">Cliente</a></li>
+						  	<li><a href="../View/expedienteContrato.html">Contrato</a></li>
+   						</ul>
+   					</li>
+   					<li id="dropAct" class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">Acciones<b class="caret"></b></a>
+    					<ul class="dropdown-menu">
+    		 			 <!-- links -->
+    		 				<li><a href="#modalAltaCliente" data-toggle="modal">Alta Cliente</a></li>
+						  	<li><a href="#modalAltaContrato" data-toggle="modal">Añadir Contrato</a></li>
+						  	<li><a href="#modalPago" data-toggle="modal">Generar Pago</a></li>
+						  	<li><a href="#modalGasto" data-toggle="modal">Generar Gasto</a></li>
+   						</ul>
+   					</li>
+				</ul>
+  		    </div>
+  			</div>
+ 		 </div>
+ 		 
+ 		 <a href="../Utils/Logout.php" >Cerrar sesion</a>
+	</div>
+
+		<!-- Modal -->
+		<div id="modalmodificador" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+		    	<h3 id="myModalLabel">Modificar Cliente</h3>
+		  	</div>
+		  <form id="formularioMod" action="../Menu.php" name="formularioMod" method="post">
+			  <div class="modal-body">
+
+			  		<label class="alineado" for="modCliente">Cliente ID *</label>
+					<select id="selectClientes" name="seleccionado" class="span2 alineado" type="text" onchange="obtenerDatosMod(this)"></select><br>
+
+			  		<label class="alineado" for="username">Usuario *</label>
+					<input id="username" type="text" class="span2 alineado" name="username" placeholder="Ingrese Usuario..." required="required"/><br>
+				    
+					<label class="alineado" for="passReg">Contraseña *</label>
+					<input id="passReg" type="password" class="span2 alineado" name="password" placeholder="Ingrese Contrasena..." required="required"/><br>
+					
+					<label class="alineado" for="email">Email *</label>
+					<input id="email" type="email" class="span2 alineado" name="email" placeholder="Ingrese Email" required="required"/><br>
+					
+					<label class="alineado" for="nombre">Nombre(s) *</label>
+					<input id="nombre" type="text" class="span2 alineado" name="nombre" placeholder="Nombre..." required="required"/><br>
+					
+					<label class="alineado" for="apellidoP">Apellido Paterno *</label>
+					<input id="apellidoP" type="text" class="span2 alineado" name="apellidoPat" placeholder="Apellido paterno..." required="required"/><br>
+					
+					<label class="alineado" for="apellidoM">Apellido Materno *</label>
+					<input id="apellidoM" type="text" class="span2 alineado" name="apellidoMat" placeholder="Apellido materno..." required="required"/><br>
+					
+					<label class="alineado" for="rfc">RFC *</label>
+					<input id="rfc" type="text" class="span2 alineado" name="RFC" placeholder="RFC..." required="required"/><br>
+					
+					<label class="alineado" for="tel">Telefono *</label>
+					<input id="tel" type="tel" class="span2 alineado" name="telefono" placeholder="Telefono..." required="required"/><br>
+					
+					<label class="alineado" for="persona">Es persona fisica</label>
+					<input id="persona" type="checkbox" name="esPersonaFisica"/> <br>
+					
+					<h4>Direccion</h4>
+					
+					<label class="alineado" for="calle">Calle *</label>
+					<input id="calle" type="text" class="span2 alineado" name="direccion[calle]" placeholder="Calle..." required="required"/><br>
+					
+					<label class="alineado" for="numint">Numero Interior *</label>
+					<input id="numint" type="text" class="span2 alineado" name="direccion[numInterior]" placeholder="Numero Interior..." required="required"/><br>
+					
+					<label class="alineado" for="numext">Numero Exterior </label>
+					<input id="numext" type="text" class="span2 alineado" name="direccion[numExterior]" placeholder="Numero Exterior..." /><br>
+					
+					<label class="alineado" for="col">Colonia *</label>
+					<input id="col" type="text" class="span2 alineado" name="direccion[colonia]" placeholder="Colonia..." required="required"/><br>
+					
+					<label class="alineado" for="cp">C.P. *</label>
+					<input id="cp" type="text" class="span2 alineado" name="direccion[cp]" placeholder="CP..." required="required"/><br>
+					
+					<label class="alineado" for="selectEstados">Estado *</label>
+					<select id="selectEstados" type="text" class="span2 alineado seleccion" name="direccion[estado]" required="required" onchange="obtenerMunicipios(this)">
+					</select><br>
+					
+					<label class="alineado" for="selectMunicipios">Municipio *</label>
+					<select id="selectMunicipios" type="text" class="span2 alineado seleccion" name="direccion[municipio]" required="required" >
+					</select><br>
+			  </div>
+			  <div class="modal-footer">
+				    <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+				    <input type="hidden" name="accion" value="modificar" />
+				    <button type="submit" onclick="validaForm()" class="btn btn-primary" name="uso" value="cliente" >Cambiar</button>
+			  </div>
+		  </form>
+		</div>
+	
+		<!-- Modal Alta Cliente-->
+		<div id="modalAltaCliente" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+		    	<h3 id="myModalLabel">Alta Cliente</h3>
+		  	</div>
+		  <form id="formularioAlta" action="../Menu.php" name="formularioAlta" method="post">
+			  <div class="modal-body">
+
+			  		<label class="alineado" for="username">Usuario *</label>
+					<input id="username" type="text" class="span2 alineado" name="username" placeholder="Ingrese Usuario..." required="required"/><br>
+				    
+					<label class="alineado" for="passReg">Contraseña *</label>
+					<input id="passReg" type="password" class="span2 alineado" name="password" placeholder="Ingrese Contrasena..." required="required"/><br>
+					
+					<label class="alineado" for="email">Email *</label>
+					<input id="email" type="email" class="span2 alineado" name="email" placeholder="Ingrese Email" required="required"/><br>
+					
+					<label class="alineado" for="nombre">Nombre(s) *</label>
+					<input id="nombre" type="text" class="span2 alineado" name="nombre" placeholder="Nombre..." required="required"/><br>
+					
+					<label class="alineado" for="apellidoP">Apellido Paterno *</label>
+					<input id="apellidoP" type="text" class="span2 alineado" name="apellidoPat" placeholder="Apellido paterno..." required="required"/><br>
+					
+					<label class="alineado" for="apellidoM">Apellido Materno *</label>
+					<input id="apellidoM" type="text" class="span2 alineado" name="apellidoMat" placeholder="Apellido materno..." required="required"/><br>
+					
+					<label class="alineado" for="rfc">RFC *</label>
+					<input id="rfc" type="text" class="span2 alineado" name="RFC" placeholder="RFC..." required="required"/><br>
+					
+					<label class="alineado" for="tel">Telefono *</label>
+					<input id="tel" type="tel" class="span2 alineado" name="telefono" placeholder="Telefono..." required="required"/><br>
+					
+					<label class="alineado" for="persona">Es persona fisica</label>
+					<input id="persona" type="checkbox" name="esPersonaFisica"/> <br>
+					
+					<h4>Direccion</h4>
+					
+					<label class="alineado" for="calle">Calle *</label>
+					<input id="calle" type="text" class="span2 alineado" name="direccion[calle]" placeholder="Calle..." required="required"/><br>
+					
+					<label class="alineado" for="numint">Numero Interior *</label>
+					<input id="numint" type="text" class="span2 alineado" name="direccion[numInterior]" placeholder="Numero Interior..." required="required"/><br>
+					
+					<label class="alineado" for="numext">Numero Exterior </label>
+					<input id="numext" type="text" class="span2 alineado" name="direccion[numExterior]" placeholder="Numero Exterior..." /><br>
+					
+					<label class="alineado" for="col">Colonia *</label>
+					<input id="col" type="text" class="span2 alineado" name="direccion[colonia]" placeholder="Colonia..." required="required"/><br>
+					
+					<label class="alineado" for="cp">C.P. *</label>
+					<input id="cp" type="text" class="span2 alineado" name="direccion[cp]" placeholder="CP..." required="required"/><br>
+					
+					<label class="alineado" for="selectEstados">Estado *</label>
+					<select id="selectEstados2" type="text" class="span2 alineado seleccion" name="direccion[estado]" required="required" onchange="obtenerMunicipios(this)">
+					</select><br>
+					
+					<label class="alineado" for="selectMunicipios">Municipio *</label>
+					<select id="selectMunicipios2" type="text" class="span2 alineado seleccion" name="direccion[municipio]" required="required" >
+					</select><br>
+
+					<h4>Cuenta Bancaria</h4>
+
+					<label class="alineado" for="col">Banco *</label>
+					<input id="cuentaBanco" type="text" class="span2 alineado" name="cuentaBancaria[nombreBanco]" placeholder="Cuenta Bancaria..." required="required"/><br>
+
+					<label class="alineado" for="col">Numero Cuenta *</label>
+					<input id="cuentaNumero" type="text" class="span2 alineado" name="cuentaBancaria[numeroCuenta]" placeholder="Numero Cuenta..." required="required"/><br>
+
+
+			  </div>
+			  <div class="modal-footer">
+				    <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+				    <input type="hidden" name="accion" value="insertar" />
+				    <button type="submit" onclick="validaForm()" class="btn btn-primary" name="uso" value="cliente" >Alta</button>
+			  </div>
+		  </form>
+		</div>
+
+		<!-- Modal Contrato -->
+		<div id="modalAltaContrato" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+		    	<h3 id="myModalLabel">Crear Contrato</h3>
+		  	</div>
+		  <form id="formularioContrato" action="../Menu.php" name="formularioContrato" method="post">
+			  <div class="modal-body">
+
+			  		<label class="alineado" for="modCliente">Cliente ID *</label>
+					<select id="selectClientesCon" name="idCliente" class="span2 alineado" type="text"></select><br>
+					
+					<label class="alineado" for="asunto">Asunto *</label>
+					<textarea cols="4" rows="10" id="asunto" type="text" class="span2 alineado" name="asunto" placeholder="Ingrese Asunto" required="required"></textarea><br>
+					
+					<h4>Periodo Fiscal</h4>
+
+					<label class="alineado" for="datepickerInicio">Inicio *</label>
+			  		<input type="text" id="datepickerInicio" class="span2 alineado" name="fecha" required="required"/><br>
+
+			  		<label class="alineado" for="datepickerFin">Fin *</label>
+			  		<input type="text" id="datepickerFin" class="span2 alineado" name="periodo" required="required"/><br>
+					
+					<h4>Presupuesto</h4>
+
+					<label class="alineado" for="total">Total</label>
+					<input id="total" type="text" class="span2 alineado" name="presupuesto" placeholder="Monto total..."/><br>
+					
+					<label class="alineado" for="plazosPar">Renovacion</label>
+					<input id="plazosPar" type="checkbox" name="plazos"/><br>
+
+					<label class="alineado" for="modCliente">Plazos</label>
+					<select id="selectPlazos" name="renovacion" class="span2 alineado" type="text">
+					<option value="1">Sin plazos</option>
+					<option value="3">3 meses</option>
+					<option value="6">6 meses</option>
+					<option value="9">9 meses</option>
+					<option value="12">12 meses</option>
+					</select><br>
+
+					<label class="alineado" for="saldadoI">Saldado</label>
+					<input id="saldadoI" type="checkbox" name="saldado"/><br>
+					
+					<label class="alineado" for="tarifa">Tarifa mensual</label>
+					<input id="tarifa" type="text" class="span2 alineado" name="tarifa" placeholder="Tarifa mensual..."/><br>
+
+					<h4>Contactos</h4>
+
+					<label class="alineado" for="modCliente">Contacto ID *</label>
+					<select id="selectClientesEnt" name="idEntidad" class="span2 alineado" type="text" onchange="obtenerDatosMod(this)"></select><br>
+					
+			  </div>
+			  <div class="modal-footer">
+				    <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+				    <input type="hidden" name="accion" value="crear" />
+				    <button type="submit" onclick="validaForm()" class="btn btn-primary" name="uso" value="contrato" >Crear</button>
+			  </div>
+		  </form>
+		</div>
+
+
+		<!-- Modal Modificar Contrato  -->
+		<div id="modalModContrato" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+		    	<h3 id="myModalLabel">Crear Contrato</h3>
+		  	</div>
+		  <form id="formularioModContrato" action="../Menu.php" name="formularioModContrato" method="post">
+			  <div class="modal-body">
+
+			  		<label class="alineado" for="modConCliente">Cliente ID *</label>
+					<select id="selectClientesModCon" name="seleccionadoModCon" class="span2 alineado" type="text" onchange="obtenerDatosMod(this)"></select><br>
+
+			  		<label class="alineado" for="datepicker">Fecha *</label>
+			  		<input type="text" id="datepickerModCon" class="span2 alineado" name="datepickerModCon" required="required"/><br>
+					
+					<label class="alineado" for="asunto">Asunto *</label>
+					<textarea cols="4" rows="10" id="asuntoModCon" type="text" class="span2 alineado" name="asuntoModCon" placeholder="Ingrese Asunto" required="required"></textarea><br>
+					
+					<h4>Periodo Fiscal</h4>
+
+					<label class="alineado" for="datepickerInicioModCon">Inicio *</label>
+			  		<input type="text" id="datepickerInicioModCon" class="span2 alineado" name="datepickerInicioModCon" required="required"/><br>
+
+			  		<label class="alineado" for="datepickerFinModCon">Fin *</label>
+			  		<input type="text" id="datepickerFinModCon" class="span2 alineado" name="datepickerFinModCon" required="required"/><br>
+					
+					<h4>Presupuesto</h4>
+
+					<label class="alineado" for="totalModCon">Total *</label>
+					<input id="totalModCon" type="text" class="span2 alineado" name="totalModCon" placeholder="Monto total..." required="required"/><br>
+					
+					<label class="alineado" for="modClienteModCon">Plazos *</label>
+					<select id="selectPlazosModCon" name="plazosModCon" class="span2 alineado" type="text">
+					<option value="1">Sin plazos</option>
+					<option value="3">3 meses</option>
+					<option value="6">6 meses</option>
+					<option value="9">9 meses</option>
+					<option value="12">12 meses</option>
+					</select><br>
+					
+					<label class="alineado" for="tarifa">Tarifa mensual *</label>
+					<input id="tarifaModCon" type="text" class="span2 alineado" name="tarifaModCon" placeholder="Tarifa mensual..." required="required"/><br>
+
+					<h4>Contactos</h4>
+
+					<label class="alineado" for="modClienteModCon">Contacto ID *</label>
+					<select id="selectClientesEntModCon" name="seleccionadoModCon" class="span2 alineado" type="text" onchange="obtenerDatosMod(this)"></select><br>
+
+					<h4>Datos participante</h4>
+					
+					<label class="alineado" for="nombreParModCon">Nombre(s) *</label>
+					<input id="nombreParModCon" type="text" class="span2 alineado" name="nombreParModCon" placeholder="Nombre..." required="required"/><br>
+					
+					<label class="alineado" for="apellidoPParModCon">Apellido Paterno *</label>
+					<input id="apellidoPParModCon" type="text" class="span2 alineado" name="apellidoPatParModCon" placeholder="Apellido paterno..." required="required"/><br>
+					
+					<label class="alineado" for="apellidoMModCon">Apellido Materno *</label>
+					<input id="apellidoMParModCon" type="text" class="span2 alineado" name="apellidoMatModCon" placeholder="Apellido materno..." required="required"/><br>
+					
+					<label class="alineado" for="rfcModCon">RFC *</label>
+					<input id="rfcParModCon" type="text" class="span2 alineado" name="RFCParModCon" placeholder="RFC..." required="required"/><br>
+					
+					<label class="alineado" for="emailParModCon">Email *</label>
+					<input id="emailParModCon" type="email" class="span2 alineado" name="emailParModCon" placeholder="Ingrese Email" required="required"/><br>
+
+					<label class="alineado" for="personaPar">Es persona fisica</label>
+					<input id="personaParModCon" type="checkbox" name="esPersonaFisicaParModCon"/><br>					
+					
+					<h4>Direccion</h4>
+					
+					<label class="alineado" for="callePar">Calle *</label>
+					<input id="calleParModCon" type="text" class="span2 alineado" name="direccionParModCon[calle]" placeholder="Calle..." required="required"/><br>
+					
+					<label class="alineado" for="numintParModCon">Numero Interior *</label>
+					<input id="numintParModCon" type="text" class="span2 alineado" name="direccionParModCon[numInterior]" placeholder="Numero Interior..." required="required"/><br>
+					
+					<label class="alineado" for="numextParModCon">Numero Exterior </label>
+					<input id="numextParModCon" type="text" class="span2 alineado" name="direccionParModCon[numExterior]" placeholder="Numero Exterior..." /><br>
+					
+					<label class="alineado" for="colParModCon">Colonia *</label>
+					<input id="colParModCon" type="text" class="span2 alineado" name="direccionParModCon[colonia]" placeholder="Colonia..." required="required"/><br>
+					
+					<label class="alineado" for="cpParModCon">C.P. *</label>
+					<input id="cpParModCon" type="text" class="span2 alineado" name="direccionParModCon[cp]" placeholder="CP..." required="required"/><br>
+					
+					<label class="alineado" for="telParModCon">Telefono *</label>
+					<input id="telParModCon" type="tel" class="span2 alineado" name="telefonoParModCon" placeholder="Telefono..." required="required"/><br>
+					
+			  </div>
+			  <div class="modal-footer">
+				    <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+				    <input type="hidden" name="accion" value="modificar" />
+				    <button type="submit" onclick="validaForm()" class="btn btn-primary" name="uso" value="contrato" >Cambiar</button>
+			  </div>
+		  </form>
+		</div>
+
+		<!-- Modal Pago -->
+		<div id="modalPago" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+		    	<h3 id="myModalLabel">Pago</h3>
+		  	</div>
+		  <form id="formularioPago" action="../Menu.php" name="formularioPago" method="post">
+			  <div class="modal-body">
+
+			  		<label class="alineado" for="selectClientesPago">Cliente ID *</label>
+					<select id="selectClientesPago" name="selectClientesPago" class="span2 alineado" type="text" onchange=" Contratos(this);"></select><br>
+
+			  		<label class="alineado" for="modCliente">ID Contrato *</label>
+					<select id="selectContratos" name="idContrato" class="span2 alineado" type="text"></select><br>
+
+					<label class="alineado" for="montoPago">Monto *</label>
+			  		<input type="text" id="montoPago" class="span2 alineado" name="monto" required="required"/><br>
+
+			  		<label class="alineado" for="datepickerPago">Fecha *</label>
+			  		<input type="text" id="datepickerPago" class="span2 alineado" name="fecha" required="required"/><br>
+					
+			  </div>
+			  <div class="modal-footer">
+				    <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+				    <input type="hidden" name="accion" value="pago" />
+				    <button type="submit" onclick="validaForm()" class="btn btn-primary" name="uso" value="contrato" >Pago</button>
+			  </div>
+		  </form>
+		</div>
+
+		<!-- Modal Gasto -->
+		<div id="modalGasto" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+		    	<h3 id="myModalLabel">Gasto</h3>
+		  	</div>
+		  <form id="formularioGasto" action="../Menu.php" name="formularioGasto" method="post">
+			  <div class="modal-body">
+
+			  		<label class="alineado" for="selectClientesGasto">Cliente ID *</label>
+					<select id="selectClientesGasto" name="selectClientesGasto" class="span2 alineado" type="text" onchange=" Contratos(this);"></select><br>
+
+			  		<label class="alineado" for="selectContratosGasto">ID Contrato *</label>
+					<select id="selectContratosGasto" name="idContrato" class="span2 alineado" type="text"></select><br>
+
+					<label class="alineado" for="costoGasto">Costo *</label>
+			  		<input type="text" id="costoGasto" class="span2 alineado" name="costo" required="required"/><br>
+
+			  		<label class="alineado" for="comentarioGasto">Comentario *</label>
+			  		<input type="text" id="comentarioGasto" class="span2 alineado" name="comentario" required="required"/><br>
+
+			  		<label class="alineado" for="categoriaGasto">Categoria *</label>
+			  		<input type="text" id="categoriaGasto" class="span2 alineado" name="categoria" required="required"/><br>
+
+			  		<label class="alineado" for="origenGasto">Cuenta origen</label>
+			  		<input type="text" id="origenGasto" class="span2 alineado" name="cuenta_origen"/><br>
+
+			  		<label class="alineado" for="destinoGasto">Cuenta destino</label>
+			  		<input type="text" id="destinoGasto" class="span2 alineado" name="cuenta_destino"/><br>
+
+			  		<label class="alineado" for="comisionGasto">Comision</label>
+			  		<input type="text" id="comisionGasto" class="span2 alineado" name="comision" required="required"/><br>
+					
+			  </div>
+			  <div class="modal-footer">
+				    <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+				    <input type="hidden" name="accion" value="gasto" />
+				    <button type="submit" onclick="validaForm()" class="btn btn-primary" name="uso" value="contrato" >Gasto</button>
+			  </div>
+		  </form>
+		</div>
+	
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="hero-unit span10">
+				<!--Body-->
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Balance:</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<th>Contrato:</th>
+					</tr>
+					<tr>
+						<td>
+							<select id="selectContratosCu" name="idContrato" class="span2 alineado" type="text"></select>
+						</td>
+					</tr>
+					
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+	
+
+
+</body>
+
+
+
+</html>
