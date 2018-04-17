@@ -3,8 +3,6 @@
 include_once ('Controller/ClienteCtl.php');
 include_once ('Controller/ContratoCtl.php');
 include_once ('Controller/LoginCtl.php');
-
-//include_once ('Utils/Logout.php');
 if((!isset($_SESSION)))
 {
 	session_start();
